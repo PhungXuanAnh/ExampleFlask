@@ -1,0 +1,42 @@
+version: '3.6'
+
+services:
+  spectre-api:
+    image: spectre.azurecr.io/spectre/api
+    container_name: spectre-api
+    build:
+      context: ./src
+      dockerfile: Api.Dockerfile
+    env_file:
+      - ./src/config.env
+    environment:
+      - ENVIRONMENT=development
+    ports:
+      - 5001:5000
+    networks: 
+      - spectre-network
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
+  spectre-worker:
+    image: spectre.azurecr.io/spectre/worker
+    container_name: spectre-worker
+    build:
+      context: ./src
+      dockerfile: Worker.Dockerfile
+    env_file:
+      - ./src/config.env
+    environment:
+      - ENVIRONMENT=development
+    networks: 
+      - spectre-network
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+  
+networks:
+  spectre-network:
+    name: spectre-network
