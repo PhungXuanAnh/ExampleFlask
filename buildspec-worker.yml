@@ -19,7 +19,7 @@ phases:
         commands:
             - echo Logging into amazon ecr
             - $(aws ecr get-login --no-include-email)
-            - echo "docker hub username ${DOCKER_HUB_USERNAME} password ${DOCKER_HUB_PASSWORD"
+            - echo "docker hub username ${DOCKER_HUB_USERNAME} password ${DOCKER_HUB_PASSWORD}"
 
     build:
         commands: 
